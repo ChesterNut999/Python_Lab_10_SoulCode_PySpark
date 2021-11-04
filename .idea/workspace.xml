@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="519a9947-0792-4c1e-86b3-a4a8e9bfbd80" name="Changes" comment="">
-      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_0_Aula_SQLPySpark_Atividades_1.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_0_Aula_PySpark_Atividade_01.ipynb" afterDir="false" />
+      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_1_Aula_PySpark_Atividade_02.ipynb" afterDir="false" />
+      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_2_Aula_PySpark_Atividade_03.ipynb" afterDir="false" />
+      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/resources/cities_internet_prices_historical.24-10-2021.csv" afterDir="false" />
+      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/resources/countries_general_info_historical.24-10-2021.csv" afterDir="false" />
+      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/resources/countries_quality_of_life_index.18-10-2021.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/.idea/Python_Lab_10_SoulCode_PySpark.iml" beforeDir="false" afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/.idea/Python_Lab_10_SoulCode_PySpark.iml" afterDir="false" />
-      <change beforePath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/01_aulas_PySpark/4_1_Aula_PySpark_SQL.ipynb" beforeDir="false" afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/01_aulas_PySpark/4_1_Aula_PySpark_SQL.ipynb" afterDir="false" />
-      <change beforePath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/02_aulas_SQLPySpark/4_0_Aula_SQLPySpark.ipynb" beforeDir="false" afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/02_aulas_SQLPySpark/4_0_Aula_SQLPySpark.ipynb" afterDir="false" />
-      <change beforePath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/02_aulas_SQLPySpark/4_1_Aula_SQLPySpark_Windowfunctions.ipynb" beforeDir="false" />
+      <change beforePath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_0_Aula_SQLPySpark_Atividades_1.ipynb" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +81,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark" />
-    <property name="settings.editor.selected.configurable" value="advanced.settings" />
+    <property name="settings.editor.selected.configurable" value="org.jetbrains.plugins.notebooks.jupyter.connections.configuration.JupyterServerConfigurable" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="Vcs.Log.Tabs.Properties">
@@ -97,7 +98,8 @@
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="Initial Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit" />
+    <MESSAGE value="Upload" />
+    <option name="LAST_COMMIT_MESSAGE" value="Upload" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
 </project>
