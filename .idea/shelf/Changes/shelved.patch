@@ -1,0 +1,707 @@
+Index: .idea/sqldialects.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"SqlDialectMappings\">\n    <file url=\"notebook:///home/mauriliocardoso/DataspellProjects/Python_Lab_10_SoulCode_PySpark/01_aulas_PySpark/4_1_Aula_PySpark_SQL.ipynb\" dialect=\"GenericSQL\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/sqldialects.xml b/.idea/sqldialects.xml
+--- a/.idea/sqldialects.xml	(revision 28ec272af5b59d62f0c5a0fa9ab9d44a9f585dfa)
++++ b/.idea/sqldialects.xml	(date 1635998831874)
+@@ -1,6 +1,7 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="SqlDialectMappings">
+-    <file url="notebook:///home/mauriliocardoso/DataspellProjects/Python_Lab_10_SoulCode_PySpark/01_aulas_PySpark/4_1_Aula_PySpark_SQL.ipynb" dialect="GenericSQL" />
++    <file url="file://$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark" dialect="GenericSQL" />
++    <file url="PROJECT" dialect="GenericSQL" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: ../../../../../DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_0_Aula_PySpark_Atividade_01.ipynb
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\n  \"nbformat\": 4,\n  \"nbformat_minor\": 0,\n  \"metadata\": {\n    \"colab\": {\n      \"name\": \"Olá, este é o Colaboratory\",\n      \"provenance\": [],\n      \"collapsed_sections\": []\n    },\n    \"kernelspec\": {\n      \"display_name\": \"Python 3\",\n      \"name\": \"python3\"\n    }\n  },\n  \"cells\": [\n    {\n      \"cell_type\": \"code\",\n      \"metadata\": {\n        \"id\": \"UxlMzu3A5Evz\"\n      },\n      \"source\": [\n        \"!pip install pyspark\"\n      ],\n      \"execution_count\": null,\n      \"outputs\": []\n    },\n    {\n      \"cell_type\": \"code\",\n      \"metadata\": {\n        \"id\": \"rV75iQwm5nlx\"\n      },\n      \"source\": [\n        \"# SPARKSESSION\\n\",\n        \"from pyspark.sql import SparkSession\\n\",\n        \"from pyspark.sql.window import Window\\n\",\n        \"from pyspark import SQLContext\\n\",\n        \"import pyspark.sql.context\\n\",\n        \"import pyspark.sql.functions as F\\n\",\n        \"from google.colab import drive\\n\",\n        \"\\n\",\n        \"drive.mount('/content/drive')\\n\",\n        \"\\n\",\n        \"spark = SparkSession.builder\\\\\\n\",\n        \"    .master(\\\"local\\\")\\\\\\n\",\n        \"    .appName(\\\"spark_dataframe_teste\\\")\\\\\\n\",\n        \"    .config(\\\"spark.ui.enabled\\\", \\\"true\\\")\\\\\\n\",\n        \"    .config(\\\"spark.ui.port\\\", \\\"4050\\\")\\\\\\n\",\n        \"    .getOrCreate()\\n\",\n        \"\\n\",\n        \"spark\"\n      ],\n      \"execution_count\": null,\n      \"outputs\": []\n    },\n    {\n      \"cell_type\": \"code\",\n      \"metadata\": {\n        \"colab\": {\n          \"base_uri\": \"https://localhost:8080/\"\n        },\n        \"id\": \"-6_adEyA6FDH\",\n        \"outputId\": \"2e5b8e30-2d90-46ad-c648-e1230ed70d0b\"\n      },\n      \"source\": [\n        \"'''ATIVIDADE 1\\n\",\n        \"\\n\",\n        \"('id':1,'nome':'Bob', 'idade':45,'gen':'M')\\n\",\n        \"('id':2,'nome':'Gloria', 'idade':43,'gen':'F')\\n\",\n        \"('id':4,'nome':'Albert', 'idade':28,'gen':'M')\\n\",\n        \"('id':5,'nome':'Laura', 'idade':33,'gen':'F')\\n\",\n        \"('id':8,'nome':'Simone', 'idade':18,'gen':'T')\\n\",\n        \"('id':12,'nome':'Marta', 'idade':45,'gen':'F')\\n\",\n        \"('id':45,'nome':'Jairo', 'idade':82,'gen':'M')\\n\",\n        \"('id':13,'nome':'Teste', 'idade':38,'gen':'T')\\n\",\n        \"\\n\",\n        \"Criar um DataFrame a partir das informações acima. Em seguida, fazer a análise utilizando o PySpark.'''\\n\",\n        \"\\n\",\n        \"dados = [\\n\",\n        \"         {'id':1, 'nome':'Bob', 'idade':45, 'gen':'M'},\\n\",\n        \"         {'id':2, 'nome':'Gloria', 'idade':43, 'gen':'F'},\\n\",\n        \"         {'id':4, 'nome':'Albert', 'idade':28, 'gen':'M'},\\n\",\n        \"         {'id':5, 'nome':'Laura', 'idade':33, 'gen':'F'},\\n\",\n        \"         {'id':8, 'nome':'Simone', 'idade':18, 'gen':'T'},\\n\",\n        \"         {'id':12, 'nome':'Marta', 'idade':45, 'gen':'F'},\\n\",\n        \"         {'id':45, 'nome':'Jairo', 'idade':82, 'gen':'M'},\\n\",\n        \"         {'id':13, 'nome':'Teste', 'idade':38, 'gen':'T'}\\n\",\n        \"]\\n\",\n        \"\\n\",\n        \"df = spark.createDataFrame(dados, verifySchema=True)\\n\",\n        \"df_sql = spark.createDataFrame(dados, verifySchema=True).createOrReplaceTempView(\\\"Pessoas\\\")\\n\",\n        \"\\n\",\n        \"spark.sql(' SELECT * FROM Pessoas \\\\\\n\",\n        \"            ORDER BY id')\"\n      ],\n      \"execution_count\": 85,\n      \"outputs\": [\n        {\n          \"output_type\": \"execute_result\",\n          \"data\": {\n            \"text/plain\": [\n              \"DataFrame[gen: string, id: bigint, idade: bigint, nome: string]\"\n            ]\n          },\n          \"metadata\": {},\n          \"execution_count\": 85\n        }\n      ]\n    },\n    {\n      \"cell_type\": \"code\",\n      \"metadata\": {\n        \"colab\": {\n          \"base_uri\": \"https://localhost:8080/\"\n        },\n        \"id\": \"MuTylMUk8r2C\",\n        \"outputId\": \"0989b190-51c7-4328-99a1-61dd3bcab84a\"\n      },\n      \"source\": [\n        \"'''1) Verifique as pessoas com idade superior a 30 anos'''\\n\",\n        \"spark.sql(' SELECT idade, nome FROM Pessoas \\\\\\n\",\n        \"            WHERE idade > 30 \\\\\\n\",\n        \"            ORDER BY idade')\\\\\\n\",\n        \"            .show()\"\n      ],\n      \"execution_count\": 88,\n      \"outputs\": [\n        {\n          \"output_type\": \"stream\",\n          \"name\": \"stdout\",\n          \"text\": [\n            \"+-----+------+\\n\",\n            \"|idade|  nome|\\n\",\n            \"+-----+------+\\n\",\n            \"|   33| Laura|\\n\",\n            \"|   38| Teste|\\n\",\n            \"|   43|Gloria|\\n\",\n            \"|   45| Marta|\\n\",\n            \"|   45|   Bob|\\n\",\n            \"|   82| Jairo|\\n\",\n            \"+-----+------+\\n\",\n            \"\\n\"\n          ]\n        }\n      ]\n    },\n    {\n      \"cell_type\": \"code\",\n      \"metadata\": {\n        \"colab\": {\n          \"base_uri\": \"https://localhost:8080/\"\n        },\n        \"id\": \"xogr4IwI8tYo\",\n        \"outputId\": \"f2f7f809-c91b-47f4-d20b-5134890eee11\"\n      },\n      \"source\": [\n        \"'''2) Verificar apenas as pessoas do sexo F'''\\n\",\n        \"spark.sql(' SELECT gen, nome, idade, id FROM Pessoas \\\\\\n\",\n        \"            WHERE gen = \\\"F\\\" \\\\\\n\",\n        \"            ORDER BY id')\\\\\\n\",\n        \"            .show()\"\n      ],\n      \"execution_count\": 89,\n      \"outputs\": [\n        {\n          \"output_type\": \"stream\",\n          \"name\": \"stdout\",\n          \"text\": [\n            \"+---+------+-----+---+\\n\",\n            \"|gen|  nome|idade| id|\\n\",\n            \"+---+------+-----+---+\\n\",\n            \"|  F|Gloria|   43|  2|\\n\",\n            \"|  F| Laura|   33|  5|\\n\",\n            \"|  F| Marta|   45| 12|\\n\",\n            \"+---+------+-----+---+\\n\",\n            \"\\n\"\n          ]\n        }\n      ]\n    },\n    {\n      \"cell_type\": \"code\",\n      \"metadata\": {\n        \"colab\": {\n          \"base_uri\": \"https://localhost:8080/\"\n        },\n        \"id\": \"CuwRKe6s8tmu\",\n        \"outputId\": \"86bc8ac6-6949-482c-cf60-60b2e1e11bef\"\n      },\n      \"source\": [\n        \"'''3) Verifique a quantidade de pessoas por sexo'''\\n\",\n        \"spark.sql(' SELECT gen, \\\\\\n\",\n        \"                COUNT(gen) \\\\\\n\",\n        \"            FROM Pessoas \\\\\\n\",\n        \"            GROUP BY gen')\\\\\\n\",\n        \"            .show()\"\n      ],\n      \"execution_count\": 79,\n      \"outputs\": [\n        {\n          \"output_type\": \"stream\",\n          \"name\": \"stdout\",\n          \"text\": [\n            \"+---+----------+\\n\",\n            \"|gen|count(gen)|\\n\",\n            \"+---+----------+\\n\",\n            \"|  F|         3|\\n\",\n            \"|  T|         2|\\n\",\n            \"|  M|         3|\\n\",\n            \"+---+----------+\\n\",\n            \"\\n\"\n          ]\n        }\n      ]\n    },\n    {\n      \"cell_type\": \"code\",\n      \"metadata\": {\n        \"colab\": {\n          \"base_uri\": \"https://localhost:8080/\"\n        },\n        \"id\": \"nuwcRDeG8tvs\",\n        \"outputId\": \"e77912b6-7dad-4026-be48-1714fc2cb474\"\n      },\n      \"source\": [\n        \"'''4) Calcular a média de idade das pessoas'''\\n\",\n        \"spark.sql(' SELECT \\\\\\n\",\n        \"                AVG(idade) \\\\\\n\",\n        \"            FROM Pessoas')\\\\\\n\",\n        \"            .show()\"\n      ],\n      \"execution_count\": 67,\n      \"outputs\": [\n        {\n          \"output_type\": \"stream\",\n          \"name\": \"stdout\",\n          \"text\": [\n            \"+----------+\\n\",\n            \"|avg(idade)|\\n\",\n            \"+----------+\\n\",\n            \"|      41.5|\\n\",\n            \"+----------+\\n\",\n            \"\\n\"\n          ]\n        }\n      ]\n    },\n    {\n      \"cell_type\": \"code\",\n      \"metadata\": {\n        \"colab\": {\n          \"base_uri\": \"https://localhost:8080/\"\n        },\n        \"id\": \"LEkrAGDX8t3r\",\n        \"outputId\": \"5dee7cf7-f9cd-4186-de57-117118ce20c0\"\n      },\n      \"source\": [\n        \"'''5) Fazer uma seleção apenas do nome e idade das pessoas ordenando por nome'''\\n\",\n        \"spark.sql(' SELECT nome, idade \\\\\\n\",\n        \"            FROM Pessoas \\\\\\n\",\n        \"            ORDER BY nome')\\\\\\n\",\n        \"            .show()\"\n      ],\n      \"execution_count\": 68,\n      \"outputs\": [\n        {\n          \"output_type\": \"stream\",\n          \"name\": \"stdout\",\n          \"text\": [\n            \"+------+-----+\\n\",\n            \"|  nome|idade|\\n\",\n            \"+------+-----+\\n\",\n            \"|Albert|   28|\\n\",\n            \"|   Bob|   45|\\n\",\n            \"|Gloria|   43|\\n\",\n            \"| Jairo|   82|\\n\",\n            \"| Laura|   33|\\n\",\n            \"| Marta|   45|\\n\",\n            \"|Simone|   18|\\n\",\n            \"| Teste|   38|\\n\",\n            \"+------+-----+\\n\",\n            \"\\n\"\n          ]\n        }\n      ]\n    },\n    {\n      \"cell_type\": \"code\",\n      \"metadata\": {\n        \"colab\": {\n          \"base_uri\": \"https://localhost:8080/\"\n        },\n        \"id\": \"cE0VK0Kn8t-T\",\n        \"outputId\": \"7a01d218-04e2-4f1a-cbf8-195458e9ed5f\"\n      },\n      \"source\": [\n        \"'''6) Mostrar um ranking de pessoas por idade (Do mais novo para o mais velho)'''\\n\",\n        \"w0 = Window.partitionBy(F.col('gen')).orderBy('idade')\\n\",\n        \"df.withColumn('rank', F.rank().over(w0)).show()\"\n      ],\n      \"execution_count\": 77,\n      \"outputs\": [\n        {\n          \"output_type\": \"stream\",\n          \"name\": \"stdout\",\n          \"text\": [\n            \"+---+---+-----+------+----+\\n\",\n            \"|gen| id|idade|  nome|rank|\\n\",\n            \"+---+---+-----+------+----+\\n\",\n            \"|  F|  5|   33| Laura|   1|\\n\",\n            \"|  F|  2|   43|Gloria|   2|\\n\",\n            \"|  F| 12|   45| Marta|   3|\\n\",\n            \"|  M|  4|   28|Albert|   1|\\n\",\n            \"|  M|  1|   45|   Bob|   2|\\n\",\n            \"|  M| 45|   82| Jairo|   3|\\n\",\n            \"|  T|  8|   18|Simone|   1|\\n\",\n            \"|  T| 13|   38| Teste|   2|\\n\",\n            \"+---+---+-----+------+----+\\n\",\n            \"\\n\"\n          ]\n        }\n      ]\n    }\n  ]\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../../../../../DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_0_Aula_PySpark_Atividade_01.ipynb b/../../../../../DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_0_Aula_PySpark_Atividade_01.ipynb
+--- a/../../../../../DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_0_Aula_PySpark_Atividade_01.ipynb	(revision cfc23689524a6b1d9d531348e2a3c5d117554b3f)
++++ b/../../../../../DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_0_Aula_PySpark_Atividade_01.ipynb	(date 1635998974692)
+@@ -1,324 +1,312 @@
+ {
+-  "nbformat": 4,
+-  "nbformat_minor": 0,
+-  "metadata": {
+-    "colab": {
+-      "name": "Olá, este é o Colaboratory",
+-      "provenance": [],
+-      "collapsed_sections": []
+-    },
+-    "kernelspec": {
+-      "display_name": "Python 3",
+-      "name": "python3"
+-    }
+-  },
+-  "cells": [
+-    {
+-      "cell_type": "code",
+-      "metadata": {
+-        "id": "UxlMzu3A5Evz"
+-      },
+-      "source": [
+-        "!pip install pyspark"
+-      ],
+-      "execution_count": null,
+-      "outputs": []
+-    },
+-    {
+-      "cell_type": "code",
+-      "metadata": {
+-        "id": "rV75iQwm5nlx"
+-      },
+-      "source": [
+-        "# SPARKSESSION\n",
+-        "from pyspark.sql import SparkSession\n",
+-        "from pyspark.sql.window import Window\n",
+-        "from pyspark import SQLContext\n",
+-        "import pyspark.sql.context\n",
+-        "import pyspark.sql.functions as F\n",
+-        "from google.colab import drive\n",
+-        "\n",
+-        "drive.mount('/content/drive')\n",
+-        "\n",
+-        "spark = SparkSession.builder\\\n",
+-        "    .master(\"local\")\\\n",
+-        "    .appName(\"spark_dataframe_teste\")\\\n",
+-        "    .config(\"spark.ui.enabled\", \"true\")\\\n",
+-        "    .config(\"spark.ui.port\", \"4050\")\\\n",
+-        "    .getOrCreate()\n",
+-        "\n",
+-        "spark"
+-      ],
+-      "execution_count": null,
+-      "outputs": []
+-    },
+-    {
+-      "cell_type": "code",
+-      "metadata": {
+-        "colab": {
+-          "base_uri": "https://localhost:8080/"
+-        },
+-        "id": "-6_adEyA6FDH",
+-        "outputId": "2e5b8e30-2d90-46ad-c648-e1230ed70d0b"
+-      },
+-      "source": [
+-        "'''ATIVIDADE 1\n",
+-        "\n",
+-        "('id':1,'nome':'Bob', 'idade':45,'gen':'M')\n",
+-        "('id':2,'nome':'Gloria', 'idade':43,'gen':'F')\n",
+-        "('id':4,'nome':'Albert', 'idade':28,'gen':'M')\n",
+-        "('id':5,'nome':'Laura', 'idade':33,'gen':'F')\n",
+-        "('id':8,'nome':'Simone', 'idade':18,'gen':'T')\n",
+-        "('id':12,'nome':'Marta', 'idade':45,'gen':'F')\n",
+-        "('id':45,'nome':'Jairo', 'idade':82,'gen':'M')\n",
+-        "('id':13,'nome':'Teste', 'idade':38,'gen':'T')\n",
+-        "\n",
+-        "Criar um DataFrame a partir das informações acima. Em seguida, fazer a análise utilizando o PySpark.'''\n",
+-        "\n",
+-        "dados = [\n",
+-        "         {'id':1, 'nome':'Bob', 'idade':45, 'gen':'M'},\n",
+-        "         {'id':2, 'nome':'Gloria', 'idade':43, 'gen':'F'},\n",
+-        "         {'id':4, 'nome':'Albert', 'idade':28, 'gen':'M'},\n",
+-        "         {'id':5, 'nome':'Laura', 'idade':33, 'gen':'F'},\n",
+-        "         {'id':8, 'nome':'Simone', 'idade':18, 'gen':'T'},\n",
+-        "         {'id':12, 'nome':'Marta', 'idade':45, 'gen':'F'},\n",
+-        "         {'id':45, 'nome':'Jairo', 'idade':82, 'gen':'M'},\n",
+-        "         {'id':13, 'nome':'Teste', 'idade':38, 'gen':'T'}\n",
+-        "]\n",
+-        "\n",
+-        "df = spark.createDataFrame(dados, verifySchema=True)\n",
+-        "df_sql = spark.createDataFrame(dados, verifySchema=True).createOrReplaceTempView(\"Pessoas\")\n",
+-        "\n",
+-        "spark.sql(' SELECT * FROM Pessoas \\\n",
+-        "            ORDER BY id')"
+-      ],
+-      "execution_count": 85,
+-      "outputs": [
+-        {
+-          "output_type": "execute_result",
+-          "data": {
+-            "text/plain": [
+-              "DataFrame[gen: string, id: bigint, idade: bigint, nome: string]"
+-            ]
+-          },
+-          "metadata": {},
+-          "execution_count": 85
+-        }
+-      ]
+-    },
+-    {
+-      "cell_type": "code",
+-      "metadata": {
+-        "colab": {
+-          "base_uri": "https://localhost:8080/"
+-        },
+-        "id": "MuTylMUk8r2C",
+-        "outputId": "0989b190-51c7-4328-99a1-61dd3bcab84a"
+-      },
+-      "source": [
+-        "'''1) Verifique as pessoas com idade superior a 30 anos'''\n",
+-        "spark.sql(' SELECT idade, nome FROM Pessoas \\\n",
+-        "            WHERE idade > 30 \\\n",
+-        "            ORDER BY idade')\\\n",
+-        "            .show()"
+-      ],
+-      "execution_count": 88,
+-      "outputs": [
+-        {
+-          "output_type": "stream",
+-          "name": "stdout",
+-          "text": [
+-            "+-----+------+\n",
+-            "|idade|  nome|\n",
+-            "+-----+------+\n",
+-            "|   33| Laura|\n",
+-            "|   38| Teste|\n",
+-            "|   43|Gloria|\n",
+-            "|   45| Marta|\n",
+-            "|   45|   Bob|\n",
+-            "|   82| Jairo|\n",
+-            "+-----+------+\n",
+-            "\n"
+-          ]
+-        }
+-      ]
+-    },
+-    {
+-      "cell_type": "code",
+-      "metadata": {
+-        "colab": {
+-          "base_uri": "https://localhost:8080/"
+-        },
+-        "id": "xogr4IwI8tYo",
+-        "outputId": "f2f7f809-c91b-47f4-d20b-5134890eee11"
+-      },
+-      "source": [
+-        "'''2) Verificar apenas as pessoas do sexo F'''\n",
+-        "spark.sql(' SELECT gen, nome, idade, id FROM Pessoas \\\n",
+-        "            WHERE gen = \"F\" \\\n",
+-        "            ORDER BY id')\\\n",
+-        "            .show()"
+-      ],
+-      "execution_count": 89,
+-      "outputs": [
+-        {
+-          "output_type": "stream",
+-          "name": "stdout",
+-          "text": [
+-            "+---+------+-----+---+\n",
+-            "|gen|  nome|idade| id|\n",
+-            "+---+------+-----+---+\n",
+-            "|  F|Gloria|   43|  2|\n",
+-            "|  F| Laura|   33|  5|\n",
+-            "|  F| Marta|   45| 12|\n",
+-            "+---+------+-----+---+\n",
+-            "\n"
+-          ]
+-        }
+-      ]
+-    },
+-    {
+-      "cell_type": "code",
+-      "metadata": {
+-        "colab": {
+-          "base_uri": "https://localhost:8080/"
+-        },
+-        "id": "CuwRKe6s8tmu",
+-        "outputId": "86bc8ac6-6949-482c-cf60-60b2e1e11bef"
+-      },
+-      "source": [
+-        "'''3) Verifique a quantidade de pessoas por sexo'''\n",
+-        "spark.sql(' SELECT gen, \\\n",
+-        "                COUNT(gen) \\\n",
+-        "            FROM Pessoas \\\n",
+-        "            GROUP BY gen')\\\n",
+-        "            .show()"
+-      ],
+-      "execution_count": 79,
+-      "outputs": [
+-        {
+-          "output_type": "stream",
+-          "name": "stdout",
+-          "text": [
+-            "+---+----------+\n",
+-            "|gen|count(gen)|\n",
+-            "+---+----------+\n",
+-            "|  F|         3|\n",
+-            "|  T|         2|\n",
+-            "|  M|         3|\n",
+-            "+---+----------+\n",
+-            "\n"
+-          ]
+-        }
+-      ]
+-    },
+-    {
+-      "cell_type": "code",
+-      "metadata": {
+-        "colab": {
+-          "base_uri": "https://localhost:8080/"
+-        },
+-        "id": "nuwcRDeG8tvs",
+-        "outputId": "e77912b6-7dad-4026-be48-1714fc2cb474"
+-      },
+-      "source": [
+-        "'''4) Calcular a média de idade das pessoas'''\n",
+-        "spark.sql(' SELECT \\\n",
+-        "                AVG(idade) \\\n",
+-        "            FROM Pessoas')\\\n",
+-        "            .show()"
+-      ],
+-      "execution_count": 67,
+-      "outputs": [
+-        {
+-          "output_type": "stream",
+-          "name": "stdout",
+-          "text": [
+-            "+----------+\n",
+-            "|avg(idade)|\n",
+-            "+----------+\n",
+-            "|      41.5|\n",
+-            "+----------+\n",
+-            "\n"
+-          ]
+-        }
+-      ]
+-    },
+-    {
+-      "cell_type": "code",
+-      "metadata": {
+-        "colab": {
+-          "base_uri": "https://localhost:8080/"
+-        },
+-        "id": "LEkrAGDX8t3r",
+-        "outputId": "5dee7cf7-f9cd-4186-de57-117118ce20c0"
+-      },
+-      "source": [
+-        "'''5) Fazer uma seleção apenas do nome e idade das pessoas ordenando por nome'''\n",
+-        "spark.sql(' SELECT nome, idade \\\n",
+-        "            FROM Pessoas \\\n",
+-        "            ORDER BY nome')\\\n",
+-        "            .show()"
+-      ],
+-      "execution_count": 68,
+-      "outputs": [
+-        {
+-          "output_type": "stream",
+-          "name": "stdout",
+-          "text": [
+-            "+------+-----+\n",
+-            "|  nome|idade|\n",
+-            "+------+-----+\n",
+-            "|Albert|   28|\n",
+-            "|   Bob|   45|\n",
+-            "|Gloria|   43|\n",
+-            "| Jairo|   82|\n",
+-            "| Laura|   33|\n",
+-            "| Marta|   45|\n",
+-            "|Simone|   18|\n",
+-            "| Teste|   38|\n",
+-            "+------+-----+\n",
+-            "\n"
+-          ]
+-        }
+-      ]
+-    },
+-    {
+-      "cell_type": "code",
+-      "metadata": {
+-        "colab": {
+-          "base_uri": "https://localhost:8080/"
+-        },
+-        "id": "cE0VK0Kn8t-T",
+-        "outputId": "7a01d218-04e2-4f1a-cbf8-195458e9ed5f"
+-      },
+-      "source": [
+-        "'''6) Mostrar um ranking de pessoas por idade (Do mais novo para o mais velho)'''\n",
+-        "w0 = Window.partitionBy(F.col('gen')).orderBy('idade')\n",
+-        "df.withColumn('rank', F.rank().over(w0)).show()"
+-      ],
+-      "execution_count": 77,
+-      "outputs": [
+-        {
+-          "output_type": "stream",
+-          "name": "stdout",
+-          "text": [
+-            "+---+---+-----+------+----+\n",
+-            "|gen| id|idade|  nome|rank|\n",
+-            "+---+---+-----+------+----+\n",
+-            "|  F|  5|   33| Laura|   1|\n",
+-            "|  F|  2|   43|Gloria|   2|\n",
+-            "|  F| 12|   45| Marta|   3|\n",
+-            "|  M|  4|   28|Albert|   1|\n",
+-            "|  M|  1|   45|   Bob|   2|\n",
+-            "|  M| 45|   82| Jairo|   3|\n",
+-            "|  T|  8|   18|Simone|   1|\n",
+-            "|  T| 13|   38| Teste|   2|\n",
+-            "+---+---+-----+------+----+\n",
+-            "\n"
+-          ]
+-        }
+-      ]
+-    }
+-  ]
++ "nbformat": 4,
++ "nbformat_minor": 0,
++ "metadata": {
++  "colab": {
++   "name": "Olá, este é o Colaboratory",
++   "provenance": [],
++   "collapsed_sections": []
++  },
++  "kernelspec": {
++   "display_name": "Python 3",
++   "name": "python3"
++  }
++ },
++ "cells": [
++  {
++   "cell_type": "code",
++   "metadata": {
++    "id": "UxlMzu3A5Evz",
++    "pycharm": {
++     "is_executing": true
++    }
++   },
++   "source": [
++    "!pip install pyspark"
++   ],
++   "execution_count": null,
++   "outputs": []
++  },
++  {
++   "cell_type": "code",
++   "metadata": {
++    "id": "rV75iQwm5nlx"
++   },
++   "source": [
++    "# SPARKSESSION\n",
++    "from pyspark.sql import SparkSession\n",
++    "from pyspark.sql.window import Window\n",
++    "from pyspark import SQLContext\n",
++    "import pyspark.sql.context\n",
++    "# import pyspark.sql.functions as F\n",
++    "# from google.colab import drive\n",
++    "\n",
++    "drive.mount('/content/drive')\n",
++    "\n",
++    "spark = SparkSession.builder\\\n",
++    "    .master(\"local\")\\\n",
++    "    .appName(\"spark_dataframe_teste\")\\\n",
++    "    .config(\"spark.ui.enabled\", \"true\")\\\n",
++    "    .config(\"spark.ui.port\", \"4050\")\\\n",
++    "    .getOrCreate()\n",
++    "\n",
++    "spark"
++   ],
++   "execution_count": null,
++   "outputs": []
++  },
++  {
++   "cell_type": "code",
++   "metadata": {
++    "colab": {
++     "base_uri": "https://localhost:8080/"
++    },
++    "id": "-6_adEyA6FDH",
++    "outputId": "2e5b8e30-2d90-46ad-c648-e1230ed70d0b"
++   },
++   "source": [
++    "'''ATIVIDADE 1\n",
++    "\n",
++    "('id':1,'nome':'Bob', 'idade':45,'gen':'M')\n",
++    "('id':2,'nome':'Gloria', 'idade':43,'gen':'F')\n",
++    "('id':4,'nome':'Albert', 'idade':28,'gen':'M')\n",
++    "('id':5,'nome':'Laura', 'idade':33,'gen':'F')\n",
++    "('id':8,'nome':'Simone', 'idade':18,'gen':'T')\n",
++    "('id':12,'nome':'Marta', 'idade':45,'gen':'F')\n",
++    "('id':45,'nome':'Jairo', 'idade':82,'gen':'M')\n",
++    "('id':13,'nome':'Teste', 'idade':38,'gen':'T')\n",
++    "\n",
++    "Criar um DataFrame a partir das informações acima. Em seguida, fazer a análise utilizando o PySpark.'''\n",
++    "\n",
++    "dados = [\n",
++    "         {'id':1, 'nome':'Bob', 'idade':45, 'gen':'M'},\n",
++    "         {'id':2, 'nome':'Gloria', 'idade':43, 'gen':'F'},\n",
++    "         {'id':4, 'nome':'Albert', 'idade':28, 'gen':'M'},\n",
++    "         {'id':5, 'nome':'Laura', 'idade':33, 'gen':'F'},\n",
++    "         {'id':8, 'nome':'Simone', 'idade':18, 'gen':'T'},\n",
++    "         {'id':12, 'nome':'Marta', 'idade':45, 'gen':'F'},\n",
++    "         {'id':45, 'nome':'Jairo', 'idade':82, 'gen':'M'},\n",
++    "         {'id':13, 'nome':'Teste', 'idade':38, 'gen':'T'}\n",
++    "]\n",
++    "\n",
++    "df = spark.createDataFrame(dados, verifySchema=True)\n",
++    "df_sql = spark.createDataFrame(dados, verifySchema=True).createOrReplaceTempView(\"Pessoas\")\n",
++    "\n",
++    "spark.sql(' SELECT * FROM Pessoas \\\n",
++    "            ORDER BY id')"
++   ],
++   "execution_count": 85,
++   "outputs": [
++    {
++     "output_type": "execute_result",
++     "data": {
++      "text/plain": [
++       "DataFrame[gen: string, id: bigint, idade: bigint, nome: string]"
++      ]
++     },
++     "metadata": {},
++     "execution_count": 85
++    }
++   ]
++  },
++  {
++   "cell_type": "code",
++   "metadata": {
++    "colab": {
++     "base_uri": "https://localhost:8080/"
++    },
++    "id": "MuTylMUk8r2C",
++    "outputId": "0989b190-51c7-4328-99a1-61dd3bcab84a",
++    "pycharm": {
++     "is_executing": true
++    }
++   },
++   "source": [
++    "'''1) Verifique as pessoas com idade superior a 30 anos'''\n",
++    "spark.sql(' SELECT idade, nome FROM Pessoas \\\n",
++    "            WHERE idade > 30 \\\n",
++    "            ORDER BY idade')\\\n",
++    "            .show()"
++   ],
++   "execution_count": null,
++   "outputs": []
++  },
++  {
++   "cell_type": "code",
++   "metadata": {
++    "colab": {
++     "base_uri": "https://localhost:8080/"
++    },
++    "id": "xogr4IwI8tYo",
++    "outputId": "f2f7f809-c91b-47f4-d20b-5134890eee11"
++   },
++   "source": [
++    "'''2) Verificar apenas as pessoas do sexo F'''\n",
++    "spark.sql(' SELECT gen, nome, idade, id FROM Pessoas \\\n",
++    "            WHERE gen = \"F\" \\\n",
++    "            ORDER BY id')\\\n",
++    "            .show()"
++   ],
++   "execution_count": 89,
++   "outputs": [
++    {
++     "output_type": "stream",
++     "name": "stdout",
++     "text": [
++      "+---+------+-----+---+\n",
++      "|gen|  nome|idade| id|\n",
++      "+---+------+-----+---+\n",
++      "|  F|Gloria|   43|  2|\n",
++      "|  F| Laura|   33|  5|\n",
++      "|  F| Marta|   45| 12|\n",
++      "+---+------+-----+---+\n",
++      "\n"
++     ]
++    }
++   ]
++  },
++  {
++   "cell_type": "code",
++   "metadata": {
++    "colab": {
++     "base_uri": "https://localhost:8080/"
++    },
++    "id": "CuwRKe6s8tmu",
++    "outputId": "86bc8ac6-6949-482c-cf60-60b2e1e11bef"
++   },
++   "source": [
++    "'''3) Verifique a quantidade de pessoas por sexo'''\n",
++    "spark.sql(' SELECT gen, \\\n",
++    "                COUNT(gen) \\\n",
++    "            FROM Pessoas \\\n",
++    "            GROUP BY gen')\\\n",
++    "            .show()"
++   ],
++   "execution_count": 79,
++   "outputs": [
++    {
++     "output_type": "stream",
++     "name": "stdout",
++     "text": [
++      "+---+----------+\n",
++      "|gen|count(gen)|\n",
++      "+---+----------+\n",
++      "|  F|         3|\n",
++      "|  T|         2|\n",
++      "|  M|         3|\n",
++      "+---+----------+\n",
++      "\n"
++     ]
++    }
++   ]
++  },
++  {
++   "cell_type": "code",
++   "metadata": {
++    "colab": {
++     "base_uri": "https://localhost:8080/"
++    },
++    "id": "nuwcRDeG8tvs",
++    "outputId": "e77912b6-7dad-4026-be48-1714fc2cb474"
++   },
++   "source": [
++    "'''4) Calcular a média de idade das pessoas'''\n",
++    "spark.sql(' SELECT \\\n",
++    "                AVG(idade) \\\n",
++    "            FROM Pessoas')\\\n",
++    "            .show()"
++   ],
++   "execution_count": 67,
++   "outputs": [
++    {
++     "output_type": "stream",
++     "name": "stdout",
++     "text": [
++      "+----------+\n",
++      "|avg(idade)|\n",
++      "+----------+\n",
++      "|      41.5|\n",
++      "+----------+\n",
++      "\n"
++     ]
++    }
++   ]
++  },
++  {
++   "cell_type": "code",
++   "metadata": {
++    "colab": {
++     "base_uri": "https://localhost:8080/"
++    },
++    "id": "LEkrAGDX8t3r",
++    "outputId": "5dee7cf7-f9cd-4186-de57-117118ce20c0"
++   },
++   "source": [
++    "'''5) Fazer uma seleção apenas do nome e idade das pessoas ordenando por nome'''\n",
++    "spark.sql(' SELECT nome, idade \\\n",
++    "            FROM Pessoas \\\n",
++    "            ORDER BY nome')\\\n",
++    "            .show()"
++   ],
++   "execution_count": 68,
++   "outputs": [
++    {
++     "output_type": "stream",
++     "name": "stdout",
++     "text": [
++      "+------+-----+\n",
++      "|  nome|idade|\n",
++      "+------+-----+\n",
++      "|Albert|   28|\n",
++      "|   Bob|   45|\n",
++      "|Gloria|   43|\n",
++      "| Jairo|   82|\n",
++      "| Laura|   33|\n",
++      "| Marta|   45|\n",
++      "|Simone|   18|\n",
++      "| Teste|   38|\n",
++      "+------+-----+\n",
++      "\n"
++     ]
++    }
++   ]
++  },
++  {
++   "cell_type": "code",
++   "metadata": {
++    "colab": {
++     "base_uri": "https://localhost:8080/"
++    },
++    "id": "cE0VK0Kn8t-T",
++    "outputId": "7a01d218-04e2-4f1a-cbf8-195458e9ed5f"
++   },
++   "source": [
++    "'''6) Mostrar um ranking de pessoas por idade (Do mais novo para o mais velho)'''\n",
++    "w0 = Window.partitionBy(F.col('gen')).orderBy('idade')\n",
++    "df.withColumn('rank', F.rank().over(w0)).show()"
++   ],
++   "execution_count": 77,
++   "outputs": [
++    {
++     "output_type": "stream",
++     "name": "stdout",
++     "text": [
++      "+---+---+-----+------+----+\n",
++      "|gen| id|idade|  nome|rank|\n",
++      "+---+---+-----+------+----+\n",
++      "|  F|  5|   33| Laura|   1|\n",
++      "|  F|  2|   43|Gloria|   2|\n",
++      "|  F| 12|   45| Marta|   3|\n",
++      "|  M|  4|   28|Albert|   1|\n",
++      "|  M|  1|   45|   Bob|   2|\n",
++      "|  M| 45|   82| Jairo|   3|\n",
++      "|  T|  8|   18|Simone|   1|\n",
++      "|  T| 13|   38| Teste|   2|\n",
++      "+---+---+-----+------+----+\n",
++      "\n"
++     ]
++    }
++   ]
++  }
++ ]
+ }
+\ No newline at end of file
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"519a9947-0792-4c1e-86b3-a4a8e9bfbd80\" name=\"Changes\" comment=\"\">\n      <change afterPath=\"$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_0_Aula_PySpark_Atividade_01.ipynb\" afterDir=\"false\" />\n      <change afterPath=\"$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_1_Aula_PySpark_Atividade_02.ipynb\" afterDir=\"false\" />\n      <change afterPath=\"$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_2_Aula_PySpark_Atividade_03.ipynb\" afterDir=\"false\" />\n      <change afterPath=\"$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/resources/cities_internet_prices_historical.24-10-2021.csv\" afterDir=\"false\" />\n      <change afterPath=\"$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/resources/countries_general_info_historical.24-10-2021.csv\" afterDir=\"false\" />\n      <change afterPath=\"$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/resources/countries_quality_of_life_index.18-10-2021.csv\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_0_Aula_SQLPySpark_Atividades_1.ipynb\" beforeDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"ChangesViewManager\" show_ignored=\"true\">\n    <option name=\"groupingKeys\">\n      <option value=\"directory\" />\n    </option>\n  </component>\n  <component name=\"FileTemplateManagerImpl\">\n    <option name=\"RECENT_TEMPLATES\">\n      <list>\n        <option value=\"Python Script\" />\n        <option value=\"Jupyter Notebook\" />\n      </list>\n    </option>\n  </component>\n  <component name=\"Git.Rebase.Settings\">\n    <option name=\"NEW_BASE\" value=\"origin/master\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"PREVIOUS_COMMIT_AUTHORS\">\n      <list>\n        <option value=\"Maurilio Cardoso\" />\n      </list>\n    </option>\n    <option name=\"PUSH_TAGS\">\n      <GitPushTagMode>\n        <option name=\"argument\" value=\"--tags\" />\n        <option name=\"title\" value=\"All\" />\n      </GitPushTagMode>\n    </option>\n    <option name=\"RECENT_BRANCH_BY_REPOSITORY\">\n      <map>\n        <entry key=\"$PROJECT_DIR$\" value=\"master\" />\n      </map>\n    </option>\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark\" />\n  </component>\n  <component name=\"GitSEFilterConfiguration\">\n    <file-type-list>\n      <filtered-out-file-type name=\"LOCAL_BRANCH\" />\n      <filtered-out-file-type name=\"REMOTE_BRANCH\" />\n      <filtered-out-file-type name=\"TAG\" />\n      <filtered-out-file-type name=\"COMMIT_BY_MESSAGE\" />\n    </file-type-list>\n  </component>\n  <component name=\"MarkdownSettingsMigration\">\n    <option name=\"stateVersion\" value=\"1\" />\n  </component>\n  <component name=\"ProjectId\" id=\"208m3KiWNiDVF6lABpfEEYcKEUe\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\">\n    <ConfirmationsSetting value=\"2\" id=\"Add\" />\n  </component>\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n    <option name=\"showMembers\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">\n    <property name=\"ASKED_ADD_EXTERNAL_FILES\" value=\"true\" />\n    <property name=\"ChangesTree.GroupingKeys\" value=\"directory\" />\n    <property name=\"RunOnceActivity.OpenProjectViewOnStart\" value=\"true\" />\n    <property name=\"RunOnceActivity.ShowReadmeOnStart\" value=\"true\" />\n    <property name=\"WebServerToolWindowFactoryState\" value=\"false\" />\n    <property name=\"last_opened_file_path\" value=\"$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark\" />\n    <property name=\"settings.editor.selected.configurable\" value=\"org.jetbrains.plugins.notebooks.jupyter.connections.configuration.JupyterServerConfigurable\" />\n  </component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"Vcs.Log.Tabs.Properties\">\n    <option name=\"TAB_STATES\">\n      <map>\n        <entry key=\"MAIN\">\n          <value>\n            <State />\n          </value>\n        </entry>\n      </map>\n    </option>\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <option name=\"ADD_EXTERNAL_FILES_SILENTLY\" value=\"true\" />\n    <MESSAGE value=\"Initial Commit\" />\n    <MESSAGE value=\"Upload\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"Upload\" />\n    <option name=\"OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT\" value=\"true\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	(revision 28ec272af5b59d62f0c5a0fa9ab9d44a9f585dfa)
++++ b/.idea/workspace.xml	(date 1635998831852)
+@@ -4,16 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="519a9947-0792-4c1e-86b3-a4a8e9bfbd80" name="Changes" comment="">
+-      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_0_Aula_PySpark_Atividade_01.ipynb" afterDir="false" />
+-      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_1_Aula_PySpark_Atividade_02.ipynb" afterDir="false" />
+-      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_2_Aula_PySpark_Atividade_03.ipynb" afterDir="false" />
+-      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/resources/cities_internet_prices_historical.24-10-2021.csv" afterDir="false" />
+-      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/resources/countries_general_info_historical.24-10-2021.csv" afterDir="false" />
+-      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/resources/countries_quality_of_life_index.18-10-2021.csv" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_0_Aula_SQLPySpark_Atividades_1.ipynb" beforeDir="false" />
+-    </list>
++    <list default="true" id="519a9947-0792-4c1e-86b3-a4a8e9bfbd80" name="Changes" comment="" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -96,10 +87,10 @@
+     </option>
+   </component>
+   <component name="VcsManagerConfiguration">
++    <option name="CHECK_NEW_TODO" value="false" />
+     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+     <MESSAGE value="Initial Commit" />
+     <MESSAGE value="Upload" />
+     <option name="LAST_COMMIT_MESSAGE" value="Upload" />
+-    <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
+   </component>
+ </project>
+\ No newline at end of file

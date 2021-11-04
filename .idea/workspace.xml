@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="519a9947-0792-4c1e-86b3-a4a8e9bfbd80" name="Changes" comment="">
-      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_0_Aula_PySpark_Atividade_01.ipynb" afterDir="false" />
-      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_1_Aula_PySpark_Atividade_02.ipynb" afterDir="false" />
-      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_2_Aula_PySpark_Atividade_03.ipynb" afterDir="false" />
-      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/resources/cities_internet_prices_historical.24-10-2021.csv" afterDir="false" />
-      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/resources/countries_general_info_historical.24-10-2021.csv" afterDir="false" />
-      <change afterPath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/resources/countries_quality_of_life_index.18-10-2021.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$USER_HOME$/DataspellProjects/Python_Lab_10_SoulCode_PySpark/03_aulas_PySpark_Atividades/1_0_Aula_SQLPySpark_Atividades_1.ipynb" beforeDir="false" />
-    </list>
+    <list default="true" id="519a9947-0792-4c1e-86b3-a4a8e9bfbd80" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
